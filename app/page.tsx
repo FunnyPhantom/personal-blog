@@ -29,7 +29,7 @@ export default function Home() {
       </main>
 
       <footer className="w-full max-w-4xl mx-auto text-center text-gray-600">
-        <p>© 2024 My Blog. All rights reserved.</p>
+        <p>© 2025 My Blog. All rights reserved.</p>
       </footer>
     </div>
   );
