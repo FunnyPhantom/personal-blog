@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SidebarProvider, Sidebar, SidebarHeader, SidebarTrigger, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset } from "@/components/ui/sidebar";
+import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset } from "@/components/ui/sidebar";
+import { getBlogPosts } from "@/utils/mdx";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,29 +24,31 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const posts = getBlogPosts()
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SidebarProvider defaultOpen={true}>
+        <SidebarProvider defaultOpen={true} >
           <div className="flex">
             <Sidebar>
-              <SidebarHeader>
-                <SidebarTrigger />
-              </SidebarHeader>
               <SidebarContent>
+
+                <SidebarHeader>
+                  Blogs
+                </SidebarHeader>
                 <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton>Dashboard</SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton>Settings</SidebarMenuButton>
-                  </SidebarMenuItem>
+                  {posts.map((post) => (
+                    <SidebarMenuItem key={post.slug}>
+                      <SidebarMenuButton>{post.title}</SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
                 </SidebarMenu>
               </SidebarContent>
             </Sidebar>
-            <SidebarInset>
+            <SidebarInset className={"p-4"}>
               {children}
             </SidebarInset>
           </div>
@@ -54,3 +57,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+

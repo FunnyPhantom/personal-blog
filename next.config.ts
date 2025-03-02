@@ -1,7 +1,25 @@
-import type { NextConfig } from "next";
+import createMDX from '@next/mdx'
+import { NextConfig } from 'next'
+
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
+})
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  experimental: {
+    mdxRs: true,
+  },
+  images: {
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    formats: ['image/webp', 'image/avif'],
+  }
+      
+}
 
-export default nextConfig;
+export default withMDX(nextConfig) 
