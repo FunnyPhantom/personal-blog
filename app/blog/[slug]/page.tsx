@@ -2,15 +2,16 @@ import { getBlogPost, getBlogPosts } from '@/utils/mdx'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { Button } from '@/components/ui/button'
 
+
 // Add any components you want to use in MDX files here
 const components = {
   Button,
 }
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export async function generateStaticParams() {
@@ -22,7 +23,8 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogPost({ params }: Props) {
-  const post = getBlogPost(params.slug)
+  const { slug } = await params
+  const post = getBlogPost(slug)
   
   return (
     <div className="max-w-4xl mx-auto py-8 prose">
